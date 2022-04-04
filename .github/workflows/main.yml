@@ -20,7 +20,7 @@ jobs:
           node-version: ${{ matrix.node }}
 
       - name: Install deps and build 
-        uses: yarn && yarn build
+        uses: yarn 
 
       - name: Lint
         run: yarn lint
