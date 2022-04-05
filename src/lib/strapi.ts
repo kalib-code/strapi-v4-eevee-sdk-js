@@ -1,4 +1,7 @@
-import axios, { AxiosInstance, HeadersDefaults } from 'axios';
+import axios, {
+  AxiosInstance,
+  HeadersDefaults,
+} from 'axios';
 
 import {
   IDataContext,
@@ -10,7 +13,7 @@ import {
 } from './context/data';
 const axiosInstance = axios.create();
 
-import { parse , stringify } from 'qs';
+import { parse, stringify } from 'qs';
 
 interface CommonHeaderProperties extends HeadersDefaults {
   Authorization: string;
@@ -139,6 +142,7 @@ export const Strapi = (
   apiUrl: string,
   httpClient: AxiosInstance = axiosInstance
 ): IDataContext => ({
+
   login: async (identifier, password) => {
     const url = `${apiUrl}/auth/local`;
 
@@ -182,7 +186,7 @@ export const Strapi = (
     });
   },
 
-  getList: async ({ resource, pagination, filters, sort, metaData }) => {
+  getList: async (resource, pagination, sort, filters,  metaData ) => {
     const url = `${apiUrl}/${resource}`;
 
     const current = pagination?.current || 1;
@@ -217,7 +221,7 @@ export const Strapi = (
     };
   },
 
-  getMany: async ({ resource, ids }) => {
+  getMany: async ( resource, ids ) => {
     const url = `${apiUrl}/${resource}`;
 
     const query = ids
@@ -231,7 +235,7 @@ export const Strapi = (
     };
   },
 
-  create: async ({ resource, variables }) => {
+  create: async ( resource, variables ) => {
     const url = `${apiUrl}/${resource}`;
 
     let dataVariables: any = { data: variables };
@@ -246,7 +250,7 @@ export const Strapi = (
     };
   },
 
-  update: async ({ resource, id, variables }) => {
+  update: async ( resource, id, variables ) => {
     const url = `${apiUrl}/${resource}/${id}`;
 
     let dataVariables: any = { data: variables };
@@ -261,7 +265,7 @@ export const Strapi = (
     };
   },
 
-  updateMany: async ({ resource, ids, variables }) => {
+  updateMany: async (resource, ids, variables ) => {
     const response = await Promise.all(
       ids.map(async id => {
         const url = `${apiUrl}/${resource}/${id}`;
@@ -279,7 +283,7 @@ export const Strapi = (
     return { data: response };
   },
 
-  createMany: async ({ resource, variables }) => {
+  createMany: async (resource, variables) => {
     const response = await Promise.all(
       variables.map(async (param: any) => {
         const { data } = await httpClient.post(`${apiUrl}/${resource}`, {
@@ -292,7 +296,7 @@ export const Strapi = (
     return { data: response };
   },
 
-  getOne: async ({ resource, id, metaData }) => {
+  getOne: async (resource, id, metaData ) => {
     const locale = metaData?.locale;
     const fields = metaData?.fields;
     const populate = metaData?.populate;
@@ -314,7 +318,7 @@ export const Strapi = (
     };
   },
 
-  deleteOne: async ({ resource, id }) => {
+  deleteOne: async (resource, id) => {
     const url = `${apiUrl}/${resource}/${id}`;
 
     const { data } = await httpClient.delete(url);
@@ -324,7 +328,7 @@ export const Strapi = (
     };
   },
 
-  deleteMany: async ({ resource, ids }) => {
+  deleteMany: async (resource, ids) => {
     const response = await Promise.all(
       ids.map(async id => {
         const { data } = await httpClient.delete(`${apiUrl}/${resource}/${id}`);
@@ -338,7 +342,7 @@ export const Strapi = (
     return apiUrl;
   },
 
-  custom: async ({ url, method, filters, sort, payload, query, headers }) => {
+  custom: async (url, method, sort, filters, payload, query, headers) => {
     let requestUrl = `${url}?`;
 
     if (sort) {
